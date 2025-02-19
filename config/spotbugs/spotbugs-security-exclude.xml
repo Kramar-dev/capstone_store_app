@@ -1,0 +1,5 @@
+<FindBugsFilter>
+    <Match>
+        <Bug pattern="PATH_TRAVERSAL_IN, PATH_TRAVERSAL_OUT"/>
+    </Match>
+</FindBugsFilter>
