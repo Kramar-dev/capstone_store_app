@@ -40,7 +40,7 @@ Requirements:
 
 ### API description
 
-![()](https://img.shields.io/static/v1?label=&message=POST&color=30c030) ```/v1/users``` **User create**
+![()](https://img.shields.io/static/v1?label=&message=POST&color=30c030) ```/v1/user/register``` **Register new user**
 
 #### request x-www-form-urlencoded data
 
@@ -66,7 +66,7 @@ Requirements:
 ```
 
 ---
-![()](https://img.shields.io/static/v1?label=&message=POST&color=30c030) ```/v1/auth/login``` **Login>**
+![()](https://img.shields.io/static/v1?label=&message=POST&color=30c030) ```/v1/user/login``` **Login**
 
 #### request x-www-form-urlencoded data
 
@@ -87,7 +87,7 @@ Requirements:
 #### response **<font color='f93e3e'>401</font>**  Unauthorized
 
 ---
-![()](https://img.shields.io/static/v1?label=&message=POST&color=30c030) ```/v1/auth/resetPassword``` **Reset password**
+![()](https://img.shields.io/static/v1?label=&message=POST&color=30c030) ```/v1/user/reset-password``` **Reset password**
 
 #### response **<font color='f93e3e'>501</font>**  Not Implemented
 
@@ -132,7 +132,7 @@ Requirements:
 ```
 
 ---
-![()](https://img.shields.io/static/v1?label=&message=GET&color=0c90ff) ```/v1/cart``` **Display cart's content**
+![()](https://img.shields.io/static/v1?label=&message=GET&color=0c90ff) ```/v1/cart/items``` **View cart content**
 
 #### response **<font color='30c030'>200</font>** OK
 
@@ -150,12 +150,12 @@ Requirements:
 ```
 
 ---
-![()](https://img.shields.io/static/v1?label=&message=DELETE&color=f93e3e) ```/v1/cart/items/{itemid}``` **Remove item from cart**
+![()](https://img.shields.io/static/v1?label=&message=DELETE&color=f93e3e) ```/v1/cart/items/{itemId}``` **Remove item from cart**
 
 #### response **<font color='30c030'>200</font>** OK
 
 ---
-![()](https://img.shields.io/static/v1?label=&message=PUT&color=fca130) ```/v1/cart/items/{itemid}``` **Modify cart item**
+![()](https://img.shields.io/static/v1?label=&message=PUT&color=fca130) ```/v1/cart/items/{itemId}``` **Modify cart item**
 
 #### request body
 
@@ -169,7 +169,7 @@ Requirements:
 #### response **<font color='30c030'>201</font>** Accepted
 
 ---
-![()](https://img.shields.io/static/v1?label=&message=POST&color=30c030) ```/v1/cart/checkout``` **Checkout**
+![()](https://img.shields.io/static/v1?label=&message=POST&color=30c030) ```/v1/orders``` **Checkout (create order)**
 
 #### response **<font color='30c030'>200</font>** OK
 
