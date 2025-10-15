@@ -3,6 +3,7 @@ package com.gd.storeapi.controller;
 import com.gd.storeapi.dto.ProductDto;
 import com.gd.storeapi.service.ProductsService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,7 @@ public class ProductController {
         this.productsService = productsService;
     }
 
-    @GetMapping()
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getAll() {
         List<ProductDto> products = productsService.getAll();
         return ResponseEntity.ok("List of products");
