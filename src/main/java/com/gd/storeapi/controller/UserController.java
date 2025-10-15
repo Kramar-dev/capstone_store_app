@@ -38,6 +38,6 @@ public class UserController {
     @PostMapping(path = "/reset-password", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<String> resetPassword() {
         userService.resetPassword();
-        return ResponseEntity.status(509).body("Not implemented");
+        return ResponseEntity.status(501).body("Not implemented");
     }
 }

@@ -23,7 +23,7 @@ public class OrderController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getAll() {
         List<OrderDto> orders = orderService.getAll();
-        return ResponseEntity.status(509).body("Not implemented");
+        return ResponseEntity.status(501).body("Not implemented");
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -35,6 +35,6 @@ public class OrderController {
     @PutMapping(path = "/{orderId}/cancel", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> cancel(@PathVariable("orderId") String orderId) {
         orderService.update(new OrderDto());
-        return ResponseEntity.status(509).body("Not implemented");
+        return ResponseEntity.status(501).body("Not implemented");
     }
 }
