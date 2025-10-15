@@ -1,4 +1,4 @@
-package com.gd.storeapi.dto;
+package com.gd.storeapi.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class Order {
 
 }
