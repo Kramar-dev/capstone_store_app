@@ -1,7 +1,6 @@
 package com.gd.storeapi.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,16 +12,16 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "orders")
-public class Order {
+@Table(name = "cart_items")
+public class CartItem {
 
     @Id
     @Column(nullable = false, updatable = false, unique = true, length = 36)
     private String id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "cart_id", nullable = false)
+    private Cart cart;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
@@ -32,12 +31,9 @@ public class Order {
     @Column(nullable = false)
     private int quantity;
 
-    @Positive
-    @Column(nullable = false)
-    private Double totalPrice;
-
     @PrePersist
     private void assignUuid() {
         if (this.id == null) this.id = UUID.randomUUID().toString();
     }
 }
+

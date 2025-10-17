@@ -1,13 +1,11 @@
 package com.gd.storeapi.controller;
 
-import com.gd.storeapi.dto.OrderDto;
 import com.gd.storeapi.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -22,19 +20,18 @@ public class OrderController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getAll() {
-        List<OrderDto> orders = orderService.getAll();
-        return ResponseEntity.status(501).body("Not implemented");
+        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> create() {
-        orderService.create(new OrderDto());
-        return ResponseEntity.ok("Order has been created");
+        orderService.create();
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping(path = "/{orderId}/cancel", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> cancel(@PathVariable("orderId") String orderId) {
-        orderService.update(new OrderDto());
-        return ResponseEntity.status(501).body("Not implemented");
+        orderService.remove(orderId);
+        return ResponseEntity.ok().build();
     }
 }

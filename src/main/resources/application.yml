@@ -7,3 +7,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    show-sql: true
+
+security:
+  jwt:
+    secret: Hg4R257ARYV0RiM6MpHNf1EyJM4062ACOso7or9dalKnN/446U1IDwBPoRIvk6Pg
+    expiration-seconds: 3600

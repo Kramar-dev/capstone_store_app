@@ -1,8 +1,15 @@
 package com.gd.storeapi.controller;
 
+import com.gd.storeapi.dto.CartItemDto;
 import com.gd.storeapi.dto.ProductDto;
+import com.gd.storeapi.dto.ProductsResponse;
 import com.gd.storeapi.service.CartService;
+import com.gd.storeapi.service.JwtService;
+import com.gd.storeapi.service.TokenContext;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,33 +21,36 @@ import java.util.List;
 @RequestMapping("/v1/cart/items")
 public class CartController {
 
+    private final CartService cartService;
+
     public CartController(CartService cartService) {
         this.cartService = cartService;
     }
 
-    private final CartService cartService;
-
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getAll() {
-        List<ProductDto> products = cartService.getAll();
-        return ResponseEntity.ok("List of items in the cart");
+    public ResponseEntity<List<CartItemDto>> getAll() {
+        List<CartItemDto> items = cartService.getUserCartItems();
+        return ResponseEntity.ok(items);
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> add() {
-        cartService.add(new ProductDto());
-        return ResponseEntity.ok("Item has been added to the cart");
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> add(@RequestBody CartItemDto cartItemDto) {
+        cartService.add(cartItemDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping(path = "/{itemId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> update(@PathVariable("itemId") String itemId) {
-        cartService.update();
-        return ResponseEntity.ok("Cart has been modified");
+    @PutMapping(path = "/{itemId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> update(
+            @PathVariable String itemId,
+            @RequestBody CartItemDto cartItemDto
+    ) {
+        cartService.update(itemId, cartItemDto);
+        return ResponseEntity.ok("Cart item updated successfully");
     }
 
-    @DeleteMapping(path = "/{itemId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> remove(@PathVariable("itemId") String itemId) {
-        cartService.remove(new ProductDto());
-        return ResponseEntity.ok("Item has been removed from the cart");
+    @DeleteMapping("/{itemId}")
+    public ResponseEntity<String> remove(@PathVariable String itemId) {
+        cartService.remove(itemId);
+        return ResponseEntity.ok("Item removed from the cart");
     }
 }

@@ -1,0 +1,99 @@
+package com.gd.storeapi.service;
+
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
+import java.time.Instant;
+import java.util.Date;
+
+@Component
+public class JwtService {
+
+    @Value("${security.jwt.secret}")
+    private String secret;
+
+    @Value("${security.jwt.expiration-seconds:3600}")
+    private long expirationSeconds;
+
+    private Key hmacKey;
+
+    @PostConstruct
+    void init() {
+        if (secret == null || secret.isBlank()) {
+            throw new IllegalStateException("Missing property security.jwt.secret");
+        }
+        if (secret.length() < 32) {
+            throw new IllegalStateException("security.jwt.secret must be at least 32 characters");
+        }
+        this.hmacKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    }
+
+    public String generateToken(String userId) {
+        Instant now = Instant.now();
+        return Jwts.builder()
+                .setSubject(userId)
+                .setIssuedAt(Date.from(now))
+                .setExpiration(Date.from(now.plusSeconds(expirationSeconds)))
+                .signWith(hmacKey, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    public boolean isValid(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(hmacKey).build().parseClaimsJws(token);
+            return true;
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    public String extractUserId(String token) {
+        Claims claims = Jwts.parserBuilder().setSigningKey(hmacKey).build()
+                .parseClaimsJws(token).getBody();
+        return claims.getSubject();
+    }
+
+    public static String getToken(String authHeader) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            return authHeader.substring(7);
+        }
+        return null;
+    }
+
+/*    private final SecretKey key = Keys.hmacShaKeyFor("super-secret-key-should-be-long".getBytes());
+    private final long expirationMs = 1000 * 60 * 60; // 1 hour
+
+    public String generateToken(String userId, Map<String, Object> claims) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(userId)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    public String extractUserId(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
+
+    public boolean isValid(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            return true;
+        } catch (JwtException e) {
+            return false;
+        }
+    }*/
+}
+

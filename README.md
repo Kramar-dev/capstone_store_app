@@ -80,7 +80,7 @@ Requirements:
 ```json
 {
   "token": "token",
-  "expiration_date": "datetime"
+  "expiration": "datetime"
 }
 ```
 

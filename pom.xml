@@ -111,6 +111,27 @@
             <version>${findbugs.version}</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.11.5</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>0.11.5</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>0.11.5</version>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -238,30 +259,30 @@
                                 </rule>
                             </rules>
                             <excludes>
-<!--                                <exclude>com/griddynamics/**/EmailTemplate.class</exclude>-->
-<!--                                <exclude>com/griddynamics/**/IdGenerator.class</exclude>-->
-<!--                                <exclude>com/griddynamics/**/UserServiceClient.class</exclude>-->
-<!--                                <exclude>com/griddynamics/**/ProductsServiceClient.class</exclude>-->
-<!--                                <exclude>com/griddynamics/**/OrderServiceClient.class</exclude>-->
-<!--                                <exclude>com/griddynamics/**/ProductsDtoMockFactory.class</exclude>-->
-<!--                                <exclude>com/griddynamics/**/NotificationMapper.class</exclude>-->
-<!--                                <exclude>com/griddynamics/**/EmailSender.class</exclude>-->
-<!--                                <exclude>com/griddynamics/**/Config.class</exclude>-->
-<!--                                <exclude>com/griddynamics/**/Notification.class</exclude>-->
-<!--                                <exclude>com/griddynamics/**/Url.class</exclude>-->
-<!--                                <exclude>com/griddynamics/**/DateTime.class</exclude>-->
-<!--                                <exclude>com/griddynamics/**/NotificationDaemon.class</exclude>-->
-<!--                                <exclude>com/griddynamics/**/DbManager.class</exclude>-->
-<!--                                <exclude>com/griddynamics/**/PostgresDataSource.class</exclude>-->
-<!--                                <exclude>com/griddynamics/**/H2NotificationRepository.class</exclude>-->
-<!--                                <exclude>com/griddynamics/**/AppContextProvider.class</exclude>-->
-<!--                                <exclude>com/griddynamics/**/NotificationController.class</exclude> &lt;!&ndash;replaced by -->
-<!--                                rest controllers&ndash;&gt;-->
-<!--                                <exclude>com/griddynamics/**/notificationservice/config/**</exclude>-->
-<!--                                <exclude>com/griddynamics/**/ValidationErrorResponse.class</exclude>-->
-<!--                                <exclude>com/griddynamics/**/ValidationErrorResponse.FieldError.class</exclude>-->
-<!--                                <exclude>com/griddynamics/**/GlobalExceptionHandler.class</exclude>-->
-<!--                                <exclude>com/griddynamics/**/NotificationSpecification.class</exclude>-->
+                                <!--                                <exclude>com/griddynamics/**/EmailTemplate.class</exclude>-->
+                                <!--                                <exclude>com/griddynamics/**/IdGenerator.class</exclude>-->
+                                <!--                                <exclude>com/griddynamics/**/UserServiceClient.class</exclude>-->
+                                <!--                                <exclude>com/griddynamics/**/ProductsServiceClient.class</exclude>-->
+                                <!--                                <exclude>com/griddynamics/**/OrderServiceClient.class</exclude>-->
+                                <!--                                <exclude>com/griddynamics/**/ProductsDtoMockFactory.class</exclude>-->
+                                <!--                                <exclude>com/griddynamics/**/NotificationMapper.class</exclude>-->
+                                <!--                                <exclude>com/griddynamics/**/EmailSender.class</exclude>-->
+                                <!--                                <exclude>com/griddynamics/**/Config.class</exclude>-->
+                                <!--                                <exclude>com/griddynamics/**/Notification.class</exclude>-->
+                                <!--                                <exclude>com/griddynamics/**/Url.class</exclude>-->
+                                <!--                                <exclude>com/griddynamics/**/DateTime.class</exclude>-->
+                                <!--                                <exclude>com/griddynamics/**/NotificationDaemon.class</exclude>-->
+                                <!--                                <exclude>com/griddynamics/**/DbManager.class</exclude>-->
+                                <!--                                <exclude>com/griddynamics/**/PostgresDataSource.class</exclude>-->
+                                <!--                                <exclude>com/griddynamics/**/H2NotificationRepository.class</exclude>-->
+                                <!--                                <exclude>com/griddynamics/**/AppContextProvider.class</exclude>-->
+                                <!--                                <exclude>com/griddynamics/**/NotificationController.class</exclude> &lt;!&ndash;replaced by -->
+                                <!--                                rest controllers&ndash;&gt;-->
+                                <!--                                <exclude>com/griddynamics/**/notificationservice/config/**</exclude>-->
+                                <!--                                <exclude>com/griddynamics/**/ValidationErrorResponse.class</exclude>-->
+                                <!--                                <exclude>com/griddynamics/**/ValidationErrorResponse.FieldError.class</exclude>-->
+                                <!--                                <exclude>com/griddynamics/**/GlobalExceptionHandler.class</exclude>-->
+                                <!--                                <exclude>com/griddynamics/**/NotificationSpecification.class</exclude>-->
                             </excludes>
                         </configuration>
                     </execution>
