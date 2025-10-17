@@ -5,6 +5,7 @@ import com.gd.storeapi.mapper.CartItemMapper;
 import com.gd.storeapi.model.Cart;
 import com.gd.storeapi.model.CartItem;
 import com.gd.storeapi.model.Product;
+import com.gd.storeapi.repository.CartItemsRepository;
 import com.gd.storeapi.repository.CartRepository;
 import com.gd.storeapi.repository.ProductRepository;
 import com.gd.storeapi.repository.UserRepository;
@@ -20,15 +21,18 @@ import java.util.stream.Collectors;
 public class CartService {
 
     private final CartRepository cartRepository;
+    private final CartItemsRepository cartItemsRepository;
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
 
     public CartService(CartRepository cartRepository,
+                       CartItemsRepository cartItemsRepository,
                        ProductRepository productRepository,
                        UserRepository userRepository) {
         this.cartRepository = cartRepository;
         this.productRepository = productRepository;
         this.userRepository = userRepository;
+        this.cartItemsRepository = cartItemsRepository;
     }
 
     public List<CartItemDto> getUserCartItems() {
@@ -43,6 +47,10 @@ public class CartService {
 
     public void add(CartItemDto cartItemDto) {
         String userId = TokenContext.getUserId();
+
+        if (cartItemDto.getQuantity() == 0) {
+            cartItemDto.setQuantity(1);
+        }
 
         Cart cart = cartRepository.findByUserId(userId)
                 .orElseGet(() -> {
@@ -70,30 +78,26 @@ public class CartService {
         cartRepository.save(cart);
     }
 
-    public void update(String itemId, CartItemDto cartItemDto) {
+    public void update(CartItemDto cartItemDto) {
         String userId = TokenContext.getUserId();
 
         Cart cart = cartRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Cart not found"));
 
-        CartItem item = cart.getItems().stream()
-                .filter(i -> i.getId().equals(itemId))
-                .findFirst()
+        CartItem item = cartItemsRepository.findByCartId(cart.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Item not found in cart"));
 
         item.setQuantity(cartItemDto.getQuantity());
         cartRepository.save(cart);
     }
 
-    public void remove(String itemId) {
+    public void remove(CartItemDto cartItemDto) {
         String userId = TokenContext.getUserId();
 
         Cart cart = cartRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Cart not found"));
 
-        cart.getItems().removeIf(item -> item.getId().equals(itemId));
-
+        cart.getItems().removeIf(item -> item.getProduct().getId().equals(cartItemDto.getProductId()));
         cartRepository.save(cart);
     }
 }
-

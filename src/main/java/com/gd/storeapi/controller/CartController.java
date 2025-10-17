@@ -2,7 +2,6 @@ package com.gd.storeapi.controller;
 
 import com.gd.storeapi.dto.CartItemDto;
 import com.gd.storeapi.dto.CartResponse;
-import com.gd.storeapi.dto.ProductsResponse;
 import com.gd.storeapi.service.CartService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -36,18 +35,15 @@ public class CartController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping(path = "/{itemId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> update(
-            @PathVariable String itemId,
-            @RequestBody CartItemDto cartItemDto
-    ) {
-        cartService.update(itemId, cartItemDto);
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> update(@RequestBody CartItemDto cartItemDto) {
+        cartService.update(cartItemDto);
         return ResponseEntity.ok("Cart item updated successfully");
     }
 
-    @DeleteMapping("/{itemId}")
-    public ResponseEntity<String> remove(@PathVariable String itemId) {
-        cartService.remove(itemId);
+    @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> remove(@RequestBody CartItemDto cartItemDto) {
+        cartService.remove(cartItemDto);
         return ResponseEntity.ok("Item removed from the cart");
     }
 }

@@ -59,6 +59,8 @@ public class OrderService {
             return order;
         }).toList();
 
+        //if orders is empty, throw exception
+
         orderRepository.saveAll(orders);
 
         // Optionally clear the cart after order creation
