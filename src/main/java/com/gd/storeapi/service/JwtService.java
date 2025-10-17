@@ -64,36 +64,5 @@ public class JwtService {
         }
         return null;
     }
-
-/*    private final SecretKey key = Keys.hmacShaKeyFor("super-secret-key-should-be-long".getBytes());
-    private final long expirationMs = 1000 * 60 * 60; // 1 hour
-
-    public String generateToken(String userId, Map<String, Object> claims) {
-        return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(userId)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
-    }
-
-    public String extractUserId(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
-    }
-
-    public boolean isValid(String token) {
-        try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            return true;
-        } catch (JwtException e) {
-            return false;
-        }
-    }*/
 }
 

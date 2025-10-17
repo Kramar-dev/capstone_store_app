@@ -18,10 +18,6 @@ public interface OrderRepository extends JpaRepository<Order, String> {
                      @Param("quantity") int quantity,
                      @Param("totalPrice") Double totalPrice);
 
-    // Find all orders for a specific user
     List<Order> findByUserId(String userId);
-
-    // Optional: find all orders for a user with sorting
-    List<Order> findByUserIdOrderByIdDesc(String userId);
 }
 

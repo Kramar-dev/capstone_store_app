@@ -7,7 +7,6 @@ import com.gd.storeapi.model.Order;
 import com.gd.storeapi.model.User;
 import com.gd.storeapi.repository.CartRepository;
 import com.gd.storeapi.repository.OrderRepository;
-import com.gd.storeapi.repository.ProductRepository;
 import com.gd.storeapi.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,16 +20,13 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final CartRepository cartRepository;
-    private final ProductRepository productRepository;
     private final UserRepository userRepository;
 
     public OrderService(OrderRepository orderRepository,
                         CartRepository cartRepository,
-                        ProductRepository productRepository,
                         UserRepository userRepository) {
         this.orderRepository = orderRepository;
         this.cartRepository = cartRepository;
-        this.productRepository = productRepository;
         this.userRepository = userRepository;
     }
 
@@ -62,8 +58,6 @@ public class OrderService {
         //if orders is empty, throw exception
 
         orderRepository.saveAll(orders);
-
-        // Optionally clear the cart after order creation
         cart.getItems().clear();
         cartRepository.save(cart);
     }

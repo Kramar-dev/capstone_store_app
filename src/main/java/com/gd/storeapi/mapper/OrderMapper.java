@@ -22,11 +22,6 @@ public class OrderMapper {
         order.setId(orderDto.getId());
         order.setQuantity(orderDto.getQuantity());
         order.setTotalPrice(orderDto.getTotalPrice());
-
-        // Associations (user, product) should be set in service layer:
-        // order.setUser(userRepository.findById(orderDto.getUserId()).orElseThrow(...));
-        // order.setProduct(productRepository.findById(orderDto.getProductId()).orElseThrow(...));
-
         return order;
     }
 }

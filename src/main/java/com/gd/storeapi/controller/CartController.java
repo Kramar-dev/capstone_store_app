@@ -9,8 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Slf4j
 @RestController
 @RequestMapping("/v1/cart/items")

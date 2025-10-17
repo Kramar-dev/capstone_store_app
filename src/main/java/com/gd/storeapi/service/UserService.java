@@ -73,8 +73,8 @@ public class UserService {
 
     private void createCartForUser(User user) {
         Cart cart = new Cart();
-        cart.setUser(user);      // owning side set
-        user.setCart(cart);      // inverse side set for consistency
+        cart.setUser(user);
+        user.setCart(cart);
         cartRepository.save(cart);
     }
 }

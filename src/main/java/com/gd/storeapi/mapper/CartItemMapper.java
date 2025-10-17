@@ -21,10 +21,6 @@ public class CartItemMapper {
         CartItem cartItem = new CartItem();
         cartItem.setId(cartItemDto.getId());
         cartItem.setQuantity(cartItemDto.getQuantity());
-
-        // Associations will be set later (in service)
-        // e.g. cartItem.setCart(cart);
-        //      cartItem.setProduct(product);
         return cartItem;
     }
 }
