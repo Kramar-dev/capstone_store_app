@@ -29,7 +29,7 @@ public class OrderController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping(path = "/{orderId}/cancel", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(path = "/{orderId}/cancel", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> cancel(@PathVariable("orderId") String orderId) {
         orderService.remove(orderId);
         return ResponseEntity.ok().build();

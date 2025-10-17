@@ -44,7 +44,7 @@ public class CartController {
             @Validated(OnUpdate.class) @RequestBody CartItemDto cartItemDto
     ) {
         cartService.update(cartItemDto);
-        return ResponseEntity.ok("Cart item updated successfully");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
     @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -52,6 +52,6 @@ public class CartController {
             @Validated(OnDelete.class) @RequestBody CartItemDto cartItemDto
     ) {
         cartService.remove(cartItemDto);
-        return ResponseEntity.ok("Item removed from the cart");
+        return ResponseEntity.ok().build();
     }
 }

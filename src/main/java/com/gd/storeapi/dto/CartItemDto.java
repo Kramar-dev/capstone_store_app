@@ -17,15 +17,14 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CartItemDto {
 
-    @NotBlank(message = "Item ID is required for an update.", groups = OnUpdate.class)
     private String id;
 
     private String cartId;
 
-    @NotBlank(message = "Product ID is required.", groups = {OnCreate.class, OnDelete.class})
+    @NotBlank(message = "Product ID is required.", groups = {OnCreate.class, OnUpdate.class, OnDelete.class})
     private String productId;
 
     @NotNull(message = "Quantity is required.", groups = {OnUpdate.class})
     @Min(value = 0, message = "Quantity must be at least 1.", groups = {OnUpdate.class})
-    private Integer quantity; // Changed to Integer
+    private Integer quantity;
 }

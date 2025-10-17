@@ -48,7 +48,7 @@ public class CartService {
     public void add(CartItemDto cartItemDto) {
         String userId = TokenContext.getUserId();
 
-        if (cartItemDto.getQuantity() == 0) {
+        if (cartItemDto.getQuantity() == null || cartItemDto.getQuantity() == 0) {
             cartItemDto.setQuantity(1);
         }
 

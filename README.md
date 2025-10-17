@@ -53,17 +53,11 @@ Requirements:
 
 ```json
 {
-  "userid": "12345"
+  "id": "ad4332a3-98f5-4557-93fb-ec92ae915626"
 }
 ```
 
-#### response **<font color='f93e3e'>409</font>**  Conflict
-
-```json
-{
-  "error": "User already exists"
-}
-```
+#### response **<font color='f93e3e'>400</font>**  Bad Request
 
 ---
 ![()](https://img.shields.io/static/v1?label=&message=POST&color=30c030) ```/v1/user/login``` **Login**
@@ -84,6 +78,8 @@ Requirements:
 }
 ```
 
+#### response **<font color='f93e3e'>400</font>**  Bad Request
+
 #### response **<font color='f93e3e'>401</font>**  Unauthorized
 
 ---
@@ -98,12 +94,20 @@ Requirements:
 
 ```json
 {
-  "items": [
+  "products": [
     {
-      "id": "2411",
-      "title": "Nail gun",
-      "available": 8,
-      "price": "23.95"
+      "id": "31079160-01b5-49e5-9feb-dfc038985f85",
+      "title": "Random Product 1",
+      "description": "This is a description for random product 1",
+      "price": 30.83,
+      "quantity": 48
+    },
+    {
+      "id": "33fed41e-b48f-4a52-9a82-7ef295c0cfb2",
+      "title": "Random Product 2",
+      "description": "This is a description for random product 2",
+      "price": 87.8,
+      "quantity": 34
     }
   ]
 }
@@ -112,24 +116,9 @@ Requirements:
 ---
 ![()](https://img.shields.io/static/v1?label=&message=POST&color=30c030) ```/v1/cart/items``` **Add item to cart**
 
-#### request body
-
-```json
-{
-  "id": "363",
-  "quantity": "7"
-}
-```
-
 #### response **<font color='30c030'>201</font>** Accepted
 
 #### response **<font color='f93e3e'>400</font>**  Bad Request
-
-```json
-{
-  "error": "Product is out of stock"
-}
-```
 
 ---
 ![()](https://img.shields.io/static/v1?label=&message=GET&color=0c90ff) ```/v1/cart/items``` **View cart content**
@@ -140,10 +129,10 @@ Requirements:
 {
   "items": [
     {
-      "id": "2411",
-      "title": "Nail gun",
-      "quantity": 8,
-      "price": "23.95"
+      "id": "6ab804fc-7bb8-4e26-8f2a-c28444f08b8e",
+      "cartId": "dc0d0301-d67e-4d27-9022-350337f8f437",
+      "productId": "1b2ea277-0eca-4163-824a-64fddc76a80b",
+      "quantity": 2
     }
   ]
 }
@@ -153,6 +142,7 @@ Requirements:
 ![()](https://img.shields.io/static/v1?label=&message=DELETE&color=f93e3e) ```/v1/cart/items/{itemId}``` **Remove item from cart**
 
 #### response **<font color='30c030'>200</font>** OK
+#### response **<font color='f93e3e'>400</font>**  Bad Request
 
 ---
 ![()](https://img.shields.io/static/v1?label=&message=PUT&color=fca130) ```/v1/cart/items/{itemId}``` **Modify cart item**
@@ -161,12 +151,13 @@ Requirements:
 
 ```json
 {
-  "id": "363",
-  "quantity": "7"
+  "productId": "363",
+  "quantity": 7
 }
 ```
 
 #### response **<font color='30c030'>201</font>** Accepted
+#### response **<font color='f93e3e'>400</font>**  Bad Request
 
 ---
 ![()](https://img.shields.io/static/v1?label=&message=POST&color=30c030) ```/v1/orders``` **Checkout (create order)**
@@ -174,9 +165,9 @@ Requirements:
 #### response **<font color='30c030'>200</font>** OK
 
 ---
-![()](https://img.shields.io/static/v1?label=&message=POST&color=30c030) ```/v1/orders/{orderid}/cancel``` **Cancel order**
+![()](https://img.shields.io/static/v1?label=&message=DELETE&color=f93e3e) ```/v1/orders/{orderid}/cancel``` **Cancel order**
 
-#### response **<font color='f93e3e'>501</font>**  Not Implemented
+#### response **<font color='30c030'>200</font>** OK
 
 ---
 ![()](https://img.shields.io/static/v1?label=&message=GET&color=0c90ff) ```/v1/orders``` **Get user's order list**
