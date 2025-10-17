@@ -1,14 +1,8 @@
 package com.gd.storeapi.controller;
 
 import com.gd.storeapi.dto.CartItemDto;
-import com.gd.storeapi.dto.ProductDto;
-import com.gd.storeapi.dto.ProductsResponse;
 import com.gd.storeapi.service.CartService;
-import com.gd.storeapi.service.JwtService;
-import com.gd.storeapi.service.TokenContext;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
