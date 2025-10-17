@@ -1,18 +1,18 @@
 package com.gd.storeapi.service;
 
-import com.gd.storeapi.dto.UserDto;
 import com.gd.storeapi.dto.UserLoginResponse;
 import com.gd.storeapi.dto.UserRegisterResponse;
-import com.gd.storeapi.mapper.UserMapper;
+import com.gd.storeapi.model.Cart;
 import com.gd.storeapi.model.User;
+import com.gd.storeapi.repository.CartRepository;
 import com.gd.storeapi.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,28 +20,30 @@ import java.util.UUID;
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
-
     @Autowired
     private JwtService jwtService;
+    private final UserRepository userRepository;
+    private final CartRepository cartRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, CartRepository cartRepository) {
         this.userRepository = userRepository;
+        this.cartRepository = cartRepository;
     }
 
+    @Transactional
     public UserRegisterResponse register(String email, String password) {
         UserRegisterResponse response = new UserRegisterResponse();
         try {
-            // hash password
             User user = new User();
             user.setId(UUID.randomUUID().toString());
             user.setEmail(email);
-            user.setPassword(password);
+            user.setPassword(password); // TODO: hash password
             user = userRepository.save(user);
+            createCartForUser(user);
             response.setId(user.getId());
         } catch (Exception e) {
             log.error("Error during user registration", e);
-            response.setMessage(e.getCause().getMessage());
+            response.setMessage(e.getMessage());
         }
         return response;
     }
@@ -58,7 +60,7 @@ public class UserService {
             String token = jwtService.generateToken(user.getId());
             user.setToken(token);
             user.setExpiration(Instant.now().plus(30, ChronoUnit.DAYS).toString());
-            userRepository.save(user); // managed flush
+            userRepository.save(user);
             response.setToken(user.getToken());
             response.setExpiration(user.getExpiration());
             return Optional.of(response);
@@ -67,5 +69,12 @@ public class UserService {
             response.setMessage(e.getMessage());
             return Optional.of(response);
         }
+    }
+
+    private void createCartForUser(User user) {
+        Cart cart = new Cart();
+        cart.setUser(user);      // owning side set
+        user.setCart(cart);      // inverse side set for consistency
+        cartRepository.save(cart);
     }
 }

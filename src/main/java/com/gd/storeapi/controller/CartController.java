@@ -1,6 +1,8 @@
 package com.gd.storeapi.controller;
 
 import com.gd.storeapi.dto.CartItemDto;
+import com.gd.storeapi.dto.CartResponse;
+import com.gd.storeapi.dto.ProductsResponse;
 import com.gd.storeapi.service.CartService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,9 +24,10 @@ public class CartController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<CartItemDto>> getAll() {
-        List<CartItemDto> items = cartService.getUserCartItems();
-        return ResponseEntity.ok(items);
+    public ResponseEntity<CartResponse> getAll() {
+        CartResponse response = new CartResponse();
+        response.setItems(cartService.getUserCartItems());
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
